@@ -18,7 +18,7 @@ class CommandFunctionManager:
     command_functions: dict
 
     def load_command_function_names(self, command_names):
-        self.command_functions = dict(((getattr(self, f'action_{c}'), c) for c in command_names))
+        self.command_functions = dict(((c, getattr(self, f'action_{c}')) for c in command_names))
 
     def get_command_function(self, command_name: str) -> classmethod:
         return self.command_functions[command_name]
