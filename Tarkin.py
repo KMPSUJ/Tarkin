@@ -32,7 +32,7 @@ class Tarkin(discord.Client, PermissionsManager, CommandFunctionManager, BotActi
                 # check permissions
                 if self.check_permissions(message, key):
                     # perform wanted action
-                    self.get_command_function(key)(self, message,
+                    await self.get_command_function(key)(message,
                                                    message.content.removeprefix(f"{self.bot_greeting} {key}"))
                 else:
                     await self.wrong_permissins(message)
