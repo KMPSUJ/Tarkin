@@ -54,10 +54,10 @@ class PermissionsManager:
     def check_permissions(self, message: discord.Message, command_name: str) -> bool:
         if message.author.id in self.get_allowed_users(command_name):
             return True
-        elif any((r.id in self.get_allowed_roles(command_name) for r in message.author.roles)):
-            return True
-        else:
-            return False
+        if isinstance(message.author, discord.Member):
+            if any((r.id in self.get_allowed_roles(command_name) for r in message.author.roles)):
+                return True
+        return False
 
     def get_command_names(self):
         """
