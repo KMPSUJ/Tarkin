@@ -10,11 +10,12 @@ class Tarkin(discord.Client, CommandFunctionManager, BotActions):
     """
     bot_greeting: str
     perm_manager = PermissionsManager()
+    cmd_to_func_manager = CommandFunctionManager()
 
     def __init__(self, permissions_path: str, *, intents: discord.Intents, **client_options) -> None:
         self.bot_greeting = "Tarkin,"
         self.perm_manager.load_permissions(permissions_path)
-        self.load_command_function_names(self.perm_manager.get_command_names())
+        self.cmd_to_func_manager.load_command_function_names(self.perm_manager.get_command_names())
         discord.Client.__init__(self, intents=intents, **client_options)
 
     async def on_ready(self):
@@ -33,7 +34,7 @@ class Tarkin(discord.Client, CommandFunctionManager, BotActions):
                 # check permissions
                 if self.perm_manager.check_permissions(message, key):
                     # perform wanted action
-                    await self.get_command_function(key)(message,
+                    await self.cmd_to_func_manager.get_command_function(key)(message,
                                                    message.content.removeprefix(f"{self.bot_greeting} {key}"))
                 else:
                     await self.wrong_permissins(message)
