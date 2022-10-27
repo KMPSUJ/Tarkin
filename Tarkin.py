@@ -4,7 +4,7 @@ from core.command_functions_manager import CommandFunctionManager
 from bot_actions.all import BotActions
 
 
-class Tarkin(discord.Client, CommandFunctionManager, BotActions):
+class Tarkin(discord.Client, BotActions):
     """
     Final class for the discord bot.
     """
