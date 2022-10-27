@@ -15,7 +15,7 @@ class Tarkin(discord.Client, BotActions):
     def __init__(self, permissions_path: str, *, intents: discord.Intents, **client_options) -> None:
         self.bot_greeting = "Tarkin,"
         self.perm_manager.load_permissions(permissions_path)
-        self.cmd_to_func_manager.load_command_function_names(self.perm_manager.get_command_names())
+        self.cmd_to_func_manager.load_command_function_names(self, self.perm_manager.get_command_names())
         discord.Client.__init__(self, intents=intents, **client_options)
 
     async def on_ready(self):
