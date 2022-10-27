@@ -4,16 +4,17 @@ from core.command_functions_manager import CommandFunctionManager
 from bot_actions.all import BotActions
 
 
-class Tarkin(discord.Client, PermissionsManager, CommandFunctionManager, BotActions):
+class Tarkin(discord.Client, CommandFunctionManager, BotActions):
     """
     Final class for the discord bot.
     """
     bot_greeting: str
+    perm_manager = PermissionsManager()
 
     def __init__(self, permissions_path: str, *, intents: discord.Intents, **client_options) -> None:
         self.bot_greeting = "Tarkin,"
-        self.load_permissions(permissions_path)
-        self.load_command_function_names(self.get_command_names())
+        self.perm_manager.load_permissions(permissions_path)
+        self.load_command_function_names(self.perm_manager.get_command_names())
         discord.Client.__init__(self, intents=intents, **client_options)
 
     async def on_ready(self):
@@ -27,10 +28,10 @@ class Tarkin(discord.Client, PermissionsManager, CommandFunctionManager, BotActi
         if not message.content.startswith(self.bot_greeting):
             return
         # find wanted command, check permissions, and execute it (or inform why not)
-        for key in self.get_command_names():
+        for key in self.perm_manager.get_command_names():
             if message.content.startswith(f"{self.bot_greeting} {key}"):
                 # check permissions
-                if self.check_permissions(message, key):
+                if self.perm_manager.check_permissions(message, key):
                     # perform wanted action
                     await self.get_command_function(key)(message,
                                                    message.content.removeprefix(f"{self.bot_greeting} {key}"))
