@@ -1,10 +1,11 @@
 import discord
+import discord.ext.commands as commands
 from core.permisions_manager import PermissionsManager
 from core.command_functions_manager import CommandFunctionManager
 from bot_actions.all import BotActions
 
 
-class Tarkin(discord.Client, PermissionsManager, CommandFunctionManager, BotActions):
+class Tarkin(commands.Bot, PermissionsManager, CommandFunctionManager, BotActions):
     """
     Final class for the discord bot.
     """
@@ -12,9 +13,9 @@ class Tarkin(discord.Client, PermissionsManager, CommandFunctionManager, BotActi
 
     def __init__(self, permissions_path: str, *, intents: discord.Intents, **client_options) -> None:
         self.bot_greeting = "Tarkin,"
+        commands.Bot.__init__(self, self.bot_greeting, intents=intents, **client_options)
         self.load_permissions(permissions_path)
         self.load_command_function_names(self.get_command_names())
-        discord.Client.__init__(self, intents=intents, **client_options)
 
     async def on_ready(self):
         print(f'Logged on as {self.user}!')
