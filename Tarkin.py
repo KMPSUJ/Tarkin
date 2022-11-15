@@ -1,21 +1,30 @@
 import discord
-from core.permisions_manager import PermissionsManager
-from core.command_functions_manager import CommandFunctionManager
-from bot_actions.all import BotActions
+import discord.ext.commands as commands
+from core.CmdManager import CmdManager
+import asyncio
+import json
 
 
-class Tarkin(discord.Client, PermissionsManager, CommandFunctionManager, BotActions):
+class Tarkin(commands.Bot):
     """
     Final class for the discord bot.
     Second comment.
     """
     bot_greeting: str
+    perms: CmdManager
 
-    def __init__(self, permissions_path: str, *, intents: discord.Intents, **client_options) -> None:
+    def __init__(self, config_file: str, *, intents: discord.Intents, **client_options) -> None:
         self.bot_greeting = "Tarkin,"
-        self.load_permissions(permissions_path)
-        self.load_command_function_names(self.get_command_names())
-        discord.Client.__init__(self, intents=intents, **client_options)
+        commands.Bot.__init__(self, self.bot_greeting, intents=intents, **client_options)
+
+        with open(config_file, "r") as f:
+            conf = json.load(f)
+        self.load_all_extensions(conf["extensions"])
+        self.perms = CmdManager(conf, self)
+
+    def load_all_extensions(self, ext_list: list) -> None:
+        for e in ext_list:
+            asyncio.run(self.load_extension(e))
 
     async def on_ready(self):
         print(f'Logged on as {self.user}!')
@@ -28,13 +37,14 @@ class Tarkin(discord.Client, PermissionsManager, CommandFunctionManager, BotActi
         if not message.content.startswith(self.bot_greeting):
             return
         # find wanted command, check permissions, and execute it (or inform why not)
-        for key in self.get_command_names():
+        for key in self.perms.get_command_names():
             if message.content.startswith(f"{self.bot_greeting} {key}"):
                 # check permissions
-                if self.check_permissions(message, key):
+                if self.perms.check_permissions(message, key):
                     # perform wanted action
-                    await self.get_command_function(key)(message,
-                                                   message.content.removeprefix(f"{self.bot_greeting} {key}"))
+                    await self.perms.get_command_function(key)(message,
+                                                               message.content.removeprefix(
+                                                                   f"{self.bot_greeting} {key}"))
                 else:
                     await self.wrong_permissins(message)
                 return
