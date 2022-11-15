@@ -13,7 +13,7 @@ class CmdManager:
             self.path_to_function(self.cmds[k])
 
     def path_to_function(self, cmd: dict):
-        cog_name, method_name = cmd["func_path"].split(".")[0:1]
+        cog_name, method_name = cmd["func_path"].split(".")[0:2]
         cog = self.bot.get_cog(cog_name)
         cmd["func"] = getattr(cog, method_name)
 
