@@ -9,7 +9,7 @@
     "myname": {
       "users": [],
       "roles": [],
-      "path": "MyName.action_myname"
+      "func_path": "MyName.action_myname"
     }
   }
 }
