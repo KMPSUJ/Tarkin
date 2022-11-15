@@ -1,13 +1,11 @@
 import discord
 import discord.ext.commands as commands
-from core.permisions_manager import PermissionsManager
-from core.command_functions_manager import CommandFunctionManager
 from core.CmdManager import CmdManager
 import asyncio
 import json
 
 
-class Tarkin(commands.Bot, PermissionsManager, CommandFunctionManager):
+class Tarkin(commands.Bot):
     """
     Final class for the discord bot.
     """
@@ -38,7 +36,7 @@ class Tarkin(commands.Bot, PermissionsManager, CommandFunctionManager):
         if not message.content.startswith(self.bot_greeting):
             return
         # find wanted command, check permissions, and execute it (or inform why not)
-        for key in self.get_command_names():
+        for key in self.perms.get_command_names():
             if message.content.startswith(f"{self.bot_greeting} {key}"):
                 # check permissions
                 if self.perms.check_permissions(message, key):
