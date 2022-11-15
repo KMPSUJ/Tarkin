@@ -2,13 +2,12 @@ import discord
 import discord.ext.commands as commands
 from core.permisions_manager import PermissionsManager
 from core.command_functions_manager import CommandFunctionManager
-from bot_actions.all import BotActions
 from core.CmdManager import CmdManager
 import asyncio
 import json
 
 
-class Tarkin(commands.Bot, PermissionsManager, CommandFunctionManager, BotActions):
+class Tarkin(commands.Bot, PermissionsManager, CommandFunctionManager):
     """
     Final class for the discord bot.
     """
