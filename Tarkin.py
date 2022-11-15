@@ -8,6 +8,7 @@ import json
 class Tarkin(commands.Bot):
     """
     Final class for the discord bot.
+    Second comment.
     """
     bot_greeting: str
     perms: CmdManager
@@ -47,6 +48,7 @@ class Tarkin(commands.Bot):
                 else:
                     await self.wrong_permissins(message)
                 return
+
             else:
                 continue
         # if no command found
@@ -66,8 +68,8 @@ class Tarkin(commands.Bot):
 
 
 if __name__ == '__main__':
-    perm_path = "example_permissions.json"
+    config_path = "example_config.json"
     bot_intents = discord.Intents.default()
     bot_intents.message_content = True
 
-    client = Tarkin(perm_path, intents=bot_intents)
+    client = Tarkin(config_path, intents=bot_intents)
