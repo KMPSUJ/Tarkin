@@ -39,6 +39,7 @@ class Tarkin(discord.Client, PermissionsManager, CommandFunctionManager, BotActi
                     await self.wrong_permissins(message)
                 return
 
+
             else:
                 continue
         # if no command found
