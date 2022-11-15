@@ -68,8 +68,8 @@ class Tarkin(commands.Bot):
 
 
 if __name__ == '__main__':
-    perm_path = "example_permissions.json"
+    config_path = "example_config.json"
     bot_intents = discord.Intents.default()
     bot_intents.message_content = True
 
-    client = Tarkin(perm_path, intents=bot_intents)
+    client = Tarkin(config_path, intents=bot_intents)
