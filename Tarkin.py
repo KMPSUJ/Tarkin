@@ -7,6 +7,7 @@ from bot_actions.all import BotActions
 class Tarkin(discord.Client, PermissionsManager, CommandFunctionManager, BotActions):
     """
     Final class for the discord bot.
+    Second comment.
     """
     bot_greeting: str
 
