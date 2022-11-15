@@ -42,6 +42,7 @@ class Tarkin(discord.Client, PermissionsManager, CommandFunctionManager, BotActi
 
             else:
                 continue
+
         # if no command found
         await self.unknown_command(message)
 
