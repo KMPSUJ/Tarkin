@@ -1,0 +1,3 @@
+[submodule "DiscordPermBot"]
+	path = DiscordPermBot
+	url = https://github.com/KMPSUJ/DiscordPermBot.git
