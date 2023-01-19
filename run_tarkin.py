@@ -1,4 +1,4 @@
-from Tarkin import Tarkin
+from DiscordPermBot.permbot import PermBot
 import discord
 import os
 
@@ -14,5 +14,7 @@ if __name__ == '__main__':
 
     bot_intents = discord.Intents.default()
     bot_intents.message_content = True
-    client = Tarkin(permissions_path, intents=bot_intents)
+    bot_greeting = "Tarkin,"
+
+    client = PermBot(bot_greeting, permissions_path, intents=bot_intents)
     client.run(token)
