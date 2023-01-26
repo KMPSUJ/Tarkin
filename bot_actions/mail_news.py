@@ -21,7 +21,7 @@ class MailNews(commands.Cog):
         self.footer = bot.config["MailNews"]["footer"]
 
     async def action_send_by_mail(self, message: discord.Message, core_message: str) -> None:
-        if message.channel.id is not self.chanel:
+        if message.channel.id != self.chanel:
             return
 
         tmp_file_name = mktemp()
